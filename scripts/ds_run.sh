@@ -10,16 +10,18 @@ MEMANDSWAP='130GB'
 # Team mapping
 HOSTNAME=`hostname`
 case $HOSTNAME in
-    "ds1") TEAMS=(1 2 3);    GPUS=("0,1,2" "3,4,5" "6,7") ;;
-    "ds2") TEAMS=(4 5 6);    GPUS=("0,1,2" "3,4,5" "6,7") ;;
-    "ds3") TEAMS=(7 8 9);    GPUS=("0,1,2" "3,4,5" "6,7") ;;
-    "ds4") TEAMS=(10 11 12); GPUS=("0,1,2" "3,4,5" "6,7") ;;
-    "ds5") TEAMS=(3 6 9 12); GPUS=("0,1" "2,3" "4,5" "6,7");;
+    "ds1") TEAMS=(1 2);    GPUS=("0,1,2" "3,4,5") ;;
+    "ds2") TEAMS=(3 4);    GPUS=("0,1,2" "3,4,5") ;;
+    "ds3") TEAMS=(5 6);    GPUS=("0,1,2" "3,4,5") ;;
+    "ds4") TEAMS=(7 8);    GPUS=("0,1,2" "3,4,5") ;;
+    "ds5") TEAMS=(9 10);   GPUS=("0,1,2" "3,4,5") ;;
+    "ds6") TEAMS=(11 12);  GPUS=("0,1,2" "3,4,5") ;;
 esac
 
 TAG=$1
 SSH_PORT_BASE=8900
 JUP_PORT_BASE=9000
+EXT_PORT_BASE=10000
 for (( i=0; i<${#TEAMS[@]}; i++ ));
 do
     team=${TEAMS[$i]}
@@ -31,6 +33,7 @@ do
     echo '"device=$gpu"'
     gpu_arg=\""device=$gpu"\"
     docker run --cpus $CPU --gpus $gpu_arg --memory $MEM --memory-swap $MEMANDSWAP \
-               -p $ssh_port:22 -p $jupyterhub_port:8000 -v team${team}-home:/home -d $team_tag 
+               -p $ssh_port:22 -p $jupyterhub_port:8000 $EXT_PORT_BASE-$EXT_PORT_BASE+5:$EXT_PORT_BASE-$EXT_PORT_BASE+5 \ 
+    	       -v team${team}-home:/home -d $team_tag --shm-size 2G 
 done
 
