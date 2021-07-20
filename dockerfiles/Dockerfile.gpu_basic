@@ -11,7 +11,7 @@ RUN apt install -y --no-install-recommends build-essential cmake unzip vim sudo 
 #RUN apt install -y --no-install-recommends python-dev python-pip
 #RUN pip install setuptools virtualenv
 # Python 3, pip3, venv
-RUN apt install -y --no-install-recommends python3-dev python3-pip python3-venv
+RUN apt install -y --no-install-recommends python3-dev python3-pip python3-venv screen
 
 # Anaconda
 ENV PATH /opt/conda/bin:$PATH
@@ -43,4 +43,4 @@ EXPOSE 8000
 #CMD ["/usr/sbin/sshd", "-D"]
 #CMD /bin/bash -c "/usr/sbin/sshd -D; jupyterhub"
 CMD /bin/bash -c "service ssh start"
-CMD /bin/bash -c "screen -dmS jupyterhub; sleep infinite"
+CMD /bin/bash -c "screen -dmS jupyter jupyterhub; sleep infinity"
