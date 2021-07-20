@@ -33,7 +33,7 @@ do
     echo "Team: $team, Image: $team_tag, GPU: $gpu, SSH Port: $ssh_port, JupyterHub Port: $jupyterhub_port"
     echo '"device=$gpu"'
     gpu_arg=\""device=$gpu"\"
-    docker run --cpus $CPU --gpus $gpu_arg --memory $MEM --memory-swap $MEMANDSWAP --shm-size=32G -p $ssh_port:22 -p $jupyterhub_port:8000 -p $ext_port:10000 -v team${team}-home:/home -d $team_tag --restart unless-stopped
+    docker run --cpus $CPU --gpus $gpu_arg --memory $MEM --memory-swap $MEMANDSWAP --shm-size=32G -p $ssh_port:22 -p $jupyterhub_port:8000 -p $ext_port:10000 -v team${team}-home:/home -d $team_tag
     echo "done"
 done
 

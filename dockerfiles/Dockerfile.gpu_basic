@@ -42,4 +42,5 @@ EXPOSE 22
 EXPOSE 8000
 #CMD ["/usr/sbin/sshd", "-D"]
 #CMD /bin/bash -c "/usr/sbin/sshd -D; jupyterhub"
-CMD /bin/bash -c "service ssh start; jupyterhub"
+CMD /bin/bash -c "service ssh start"
+CMD /bin/bash -c "screen -dmS jupyterhub; sleep infinite"
